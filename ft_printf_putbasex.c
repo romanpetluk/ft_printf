@@ -31,11 +31,13 @@ static char	ft_0x(int x)
 
 void		ft_printf_basexnwidth(unsigned long long n, s_flag *flags)
 {
-	if (flags->hesh == 1)
+    if (flags->hesh == 1 && n)
 		flags->width -= 2;
+    if (!n && flags->accuracy < 0)
+        flags->width--;
 	if (flags->sign == 2)
 		flags->width--;
-	else if (flags->sign == 1 && flags->p == 2)
+	if (flags->sign == 1 && flags->p == 2)
 		flags->width--;
 	if (flags->accuracy < 0)
 		while (n != 0)
@@ -96,9 +98,11 @@ static void	ft_printf_putbasexx(unsigned long long n)
 
 void		ft_putnbr_basexx_width(unsigned long long n, s_flag flags)
 {
-	if (flags.accuracy == 0 && !n)
+    if (flags.p == 1 && flags.accuracy > -1)
+        flags.p = 0;
+	if (flags.accuracy > -1 && !n)
 		flags.n = 0;
-	else if (flags.width > 0 || flags.accuracy > -1)
+	if (flags.width > 0 || flags.accuracy > -1)
 		ft_printf_basexnwidth(n, &flags);
 	if (flags.hesh == 1 && flags.p == 1 && n)
 	{

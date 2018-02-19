@@ -53,6 +53,31 @@ static void	ft_printf_strnwidth(long long n, s_flag *flags)
 	}
 }
 
+static void	ft_printf_unnbrnwidth(unsigned long long n, s_flag *flags)
+{
+    if (flags->sign != 0)
+        flags->width--;
+    else if (flags->sign == 1 && flags->p == 2)
+        flags->width--;
+    if (flags->accuracy < 0)
+        while (n != 0)
+        {
+            n /= 10;
+            flags->width--;
+        }
+    else
+    {
+        while (n != 0)
+        {
+            n /= 10;
+            flags->width--;
+            flags->accuracy--;
+        }
+        if (flags->accuracy > 0)
+            flags->width -= flags->accuracy;
+    }
+}
+
 void		ft_putnbr_l(long long n, s_flag flags)
 {
 	if (flags.accuracy == 0 && !n)
@@ -95,10 +120,12 @@ void		ft_putnbr_unl(unsigned long long n, s_flag flags)
 {
 	if (flags.accuracy == 0 && !n)
 		flags.n = 0;
+    if (flags.width > -1 && flags.accuracy < 0 && n == 0)
+        flags.width--;
 	if (flags.p == 1 && flags.accuracy > -1)
 		flags.p = 0;
 	if (flags.width > 0 || flags.accuracy > -1)
-		ft_printf_strnwidth(n, &flags);
+		ft_printf_unnbrnwidth(n, &flags);
 	if (flags.p != 2)
 		ft_printf_widthnbr(&flags);
 	if (flags.sign == 2 && flags.p != 1)

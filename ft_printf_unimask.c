@@ -70,14 +70,14 @@ void				ft_make_unicode(unsigned int b)
 	int				len_bits;
 
 	len_bits = ft_bit_size(b);
-	if (len_bits <= 7)// || MB_CUR_MAX < 2)
+	if (len_bits <= 7 || MB_CUR_MAX < 2)
 	{
 		uni_char = b;
 		ft_printf_putchar(uni_char);
 	}
-	else if (len_bits <= 11)// || MB_CUR_MAX < 3)
+	else if (len_bits <= 11 || MB_CUR_MAX < 3)
 		ft_printf_mask1(b);
-	else if (len_bits <= 16)// || MB_CUR_MAX < 4)
+	else if (len_bits <= 16 || MB_CUR_MAX < 4)
 		ft_printf_mask2(b);
 	else
 		ft_printf_mask3(b);

@@ -14,10 +14,10 @@
 
 static void	ft_printf_basenwidth(unsigned long long n, s_flag *flags)
 {
-	if (flags->hesh == 1)
-		flags->width--;
 	if (flags->sign == 2)
 		flags->width--;
+    if (!n && flags->accuracy < 0)
+        flags->width--;
 	else if (flags->sign == 1 && flags->p == 2)
 		flags->width--;
 	if (flags->accuracy < 0)
@@ -52,17 +52,27 @@ static void	ft_printf_putbase(unsigned long long n)
 
 void		ft_putnbr_base_width(unsigned long long n, s_flag flags)
 {
+    if (flags.p == 1 && flags.accuracy > -1)
+        flags.p = 0;
 	if (flags.accuracy > -1 && !n)
 		flags.n = 0;
 	if (flags.width > 0 || flags.accuracy > -1)
 		ft_printf_basenwidth(n, &flags);
+    if (flags.hesh == 1 && flags.accuracy < 1 && n)
+        flags.width--;
 	if (flags.p != 2)
 		ft_printf_widthnbr(&flags);
-	if ((flags.hesh == 1 && flags.accuracy < 1 && n) ||
-		(flags.hesh == 1 && flags.accuracy > -1 && !n))
-		ft_printf_putchar('0');
-	while (flags.accuracy-- > 0)
-		ft_printf_putchar('0');
+	if ((flags.hesh == 1 && flags.accuracy < 0 && n) ||
+		(flags.hesh == 1 && flags.accuracy > -1))
+    {
+        ft_printf_putchar('0');
+        flags.accuracy--;
+    }
+	while (flags.accuracy > 0)
+    {
+        ft_printf_putchar('0');
+        flags.accuracy--;
+    }
 	if (flags.n)
 		ft_printf_putbase(n);
 	if (flags.p == 2)
@@ -71,9 +81,11 @@ void		ft_putnbr_base_width(unsigned long long n, s_flag flags)
 
 void		ft_putnbr_basex_width(unsigned long long n, s_flag flags)
 {
+    if (flags.p == 1 && flags.accuracy > -1)
+        flags.p = 0;
 	if (flags.accuracy > -1 && !n)
 		flags.n = 0;
-	else if (flags.width > 0 || flags.accuracy > -1)
+	if (flags.width > 0 || flags.accuracy > -1)
 		ft_printf_basexnwidth(n, &flags);
 	if (flags.hesh == 1 && flags.p == 1 && n)
 	{

@@ -12,15 +12,45 @@
 
 #include "ft_printf.h"
 
+static void		ft_printf_basepnwidth(unsigned long long n, s_flag *flags)
+{
+    if (flags->hesh == 1 && n)
+        flags->width -= 2;
+    if (!n)
+        flags->width--;
+    if (flags->sign == 2)
+        flags->width--;
+    else if (flags->sign == 1 && flags->p == 2)
+        flags->width--;
+    if (flags->accuracy < 0)
+        while (n != 0)
+        {
+            n /= 16;
+            flags->width--;
+        }
+    else
+    {
+        while (n != 0)
+        {
+            n /= 16;
+            flags->width--;
+            flags->accuracy--;
+        }
+        if (flags->accuracy > 0)
+            flags->width -= flags->accuracy;
+    }
+}
+
 void	ft_putnbr_pointer(unsigned long n, s_flag flags)
 {
 	flags.hesh = 1;
+    flags.sign = 0;
 	if ((!n && flags.accuracy > -1))
 		flags.n = 0;
-	if (n == 0 && flags.width > 0)
-		flags.width--;
+	if (!n && flags.width > 0)
+		flags.width -= 2;
 	if (flags.width > 0 || flags.accuracy > -1)
-		ft_printf_basexnwidth(n, &flags);
+		ft_printf_basepnwidth(n, &flags);
 	if (flags.p == 1)
 	{
 		ft_printf_putchar('0');

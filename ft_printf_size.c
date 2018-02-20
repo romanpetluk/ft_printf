@@ -6,13 +6,13 @@
 /*   By: rpetluk <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/15 15:21:31 by rpetluk           #+#    #+#             */
-/*   Updated: 2018/02/15 15:26:33 by rpetluk          ###   ########.fr       */
+/*   Updated: 2018/02/20 09:45:24 by rpetluk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-s_flag		ft_printf_size(s_flag flags, char c)
+t_flag		ft_printf_size(t_flag flags, char c)
 {
 	if (c == 'l')
 	{
@@ -37,27 +37,23 @@ s_flag		ft_printf_size(s_flag flags, char c)
 	return (flags);
 }
 
-int			ft_printf_find_flag(char c, s_flag *flags)
+static void	ft_printf_typesize00(t_flag flags, char c, va_list ap)
 {
-	if (c == 'c' || c == 'd' || c == 'D' || c == 'i' || c == 's')
-		return (1);
-	if (c == 'u' || c == 'U' || c == 'o' || c == 'O' || c == 'x' || c == 'X')
-	{
-		flags->sign = 0;
-		return (2);
-	}
-	if (c == 'C' || c == 'S')
-		return (2);
-	if (c == 'l' || c == 'h' || c == 'j' || c == 'z')
-		return (3);
-	if ((c > 48 && c < 59) || c == '.' || c == '*')
-		return (4);
-	if (c == '-' || c == '+' || c == ' ' || c == '0' || c == '#')
-		return (5);
-	return (0);
+	if (c == 'o')
+		ft_putnbr_base_width(va_arg(ap, unsigned int), flags);
+	else if (c == 'O')
+		ft_putnbr_base_width(va_arg(ap, unsigned long int), flags);
+	else if (c == 'x')
+		ft_putnbr_basex_width(va_arg(ap, unsigned int), flags);
+	else if (c == 'X')
+		ft_putnbr_basexx_width(va_arg(ap, unsigned int), flags);
+	else if (c == 'p')
+		ft_putnbr_pointer(va_arg(ap, unsigned long int), flags);
+	else
+		ft_putchar_width(c, flags);
 }
 
-static void	ft_printf_typesize0(s_flag flags, char c, va_list ap)
+static void	ft_printf_typesize0(t_flag flags, char c, va_list ap)
 {
 	if (c == 'c')
 		ft_putchar_width((char)va_arg(ap, int), flags);
@@ -75,21 +71,11 @@ static void	ft_printf_typesize0(s_flag flags, char c, va_list ap)
 		ft_printf_unic(va_arg(ap, unsigned int), flags);
 	else if (c == 'S')
 		ft_putstr_uniswidth(va_arg(ap, wchar_t *), flags);
-	else if (c == 'o')
-		ft_putnbr_base_width(va_arg(ap, unsigned int), flags);
-	else if (c == 'O')
-		ft_putnbr_base_width(va_arg(ap, unsigned long int), flags);
-	else if (c == 'x')
-		ft_putnbr_basex_width(va_arg(ap, unsigned int), flags);
-	else if (c == 'X')
-		ft_putnbr_basexx_width(va_arg(ap, unsigned int), flags);
-	else if (c == 'p')
-		ft_putnbr_pointer(va_arg(ap, unsigned long int), flags);
 	else
-		ft_putchar_width(c, flags);
+		ft_printf_typesize00(flags, c, ap);
 }
 
-static void	ft_printf_typechar(s_flag flags, va_list ap)
+static void	ft_printf_typechar(t_flag flags, va_list ap)
 {
 	if (flags.size == 6)
 		ft_putnbr_l(va_arg(ap, long long), flags);
@@ -105,7 +91,7 @@ static void	ft_printf_typechar(s_flag flags, va_list ap)
 		ft_putnbr_l((short)va_arg(ap, int), flags);
 }
 
-void		ft_printf_typeifsize(s_flag flags, char c, va_list ap)
+void		ft_printf_typeifsize(t_flag flags, char c, va_list ap)
 {
 	if ((c == 'D' && flags.size < 5) ||
 		(c == 'U' && flags.size < 5) || (c == 'O' && flags.size < 5))

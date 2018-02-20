@@ -12,7 +12,7 @@
 
 #include "ft_printf.h"
 
-void		ft_printf_typeint(s_flag flags, va_list ap)
+void		ft_printf_typeint(t_flag flags, va_list ap)
 {
 	if (flags.size == 6)
 		ft_putnbr_l(va_arg(ap, long long), flags);
@@ -28,7 +28,7 @@ void		ft_printf_typeint(s_flag flags, va_list ap)
 		ft_putnbr_l((short)va_arg(ap, int), flags);
 }
 
-void		ft_printf_typeunint(s_flag flags, va_list ap)
+void		ft_printf_typeunint(t_flag flags, va_list ap)
 {
 	if (flags.size == 6)
 		ft_putnbr_unl(va_arg(ap, unsigned long long), flags);
@@ -44,7 +44,7 @@ void		ft_printf_typeunint(s_flag flags, va_list ap)
 		ft_putnbr_unl((unsigned short)va_arg(ap, unsigned int), flags);
 }
 
-void		ft_printf_typebase(s_flag flags, va_list ap)
+void		ft_printf_typebase(t_flag flags, va_list ap)
 {
 	if (flags.size == 6)
 		ft_putnbr_base_width(va_arg(ap, unsigned long long), flags);
@@ -60,7 +60,7 @@ void		ft_printf_typebase(s_flag flags, va_list ap)
 		ft_putnbr_base_width((unsigned short)va_arg(ap, unsigned int), flags);
 }
 
-void		ft_printf_typebasex(s_flag flags, va_list ap)
+void		ft_printf_typebasex(t_flag flags, va_list ap)
 {
 	if (flags.size == 6)
 		ft_putnbr_basex_width(va_arg(ap, unsigned long long), flags);
@@ -76,7 +76,7 @@ void		ft_printf_typebasex(s_flag flags, va_list ap)
 		ft_putnbr_basex_width((unsigned short)va_arg(ap, unsigned int), flags);
 }
 
-void		ft_printf_typebasexx(s_flag flags, va_list ap)
+void		ft_printf_typebasexx(t_flag flags, va_list ap)
 {
 	if (flags.size == 6)
 		ft_putnbr_basexx_width(va_arg(ap, unsigned long long), flags);

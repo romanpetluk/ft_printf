@@ -6,7 +6,7 @@
 /*   By: rpetluk <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/15 15:38:15 by rpetluk           #+#    #+#             */
-/*   Updated: 2018/02/15 15:41:29 by rpetluk          ###   ########.fr       */
+/*   Updated: 2018/02/19 16:51:03 by rpetluk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ static void			ft_printf_mask3(unsigned int b)
 	mask3 = 0xF0808080;
 	uni_char = (b >> 18) | (mask3 >> 24);
 	ft_printf_putchar(uni_char);
-	uni_char = (((b >> 12) << 26) >> 26) | ((mask3 << 8) >> 24);//(mask3 << :sunglasses: >> 24)
+	uni_char = (((b >> 12) << 26) >> 26) | ((mask3 << 8) >> 24);
 	ft_printf_putchar(uni_char);
 	uni_char = (((b >> 6) << 26) >> 26) | ((mask3 << 16) >> 24);
 	ft_printf_putchar(uni_char);

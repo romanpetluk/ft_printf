@@ -12,7 +12,7 @@
 
 #include "ft_printf.h"
 
-void	ft_printf_reintwidth(va_list ap, const char *format, s_flag *flags)
+void	ft_printf_reintwidth(va_list ap, const char *format, t_flag *flags)
 {
 	int	d;
 
@@ -36,7 +36,7 @@ void	ft_printf_reintwidth(va_list ap, const char *format, s_flag *flags)
 	}
 }
 
-void	ft_printf_reintaccuraty(va_list ap, const char *format, s_flag *flags)
+void	ft_printf_reintaccuraty(va_list ap, const char *format, t_flag *flags)
 {
 	flags->accuracy = 0;
 	while (format[flags->i] == '.')

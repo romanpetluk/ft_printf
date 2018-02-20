@@ -6,7 +6,7 @@
 /*   By: rpetluk <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/15 15:29:16 by rpetluk           #+#    #+#             */
-/*   Updated: 2018/02/15 15:33:51 by rpetluk          ###   ########.fr       */
+/*   Updated: 2018/02/19 16:45:39 by rpetluk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static int		ft_printf_unisize(unsigned int b)
 	i = 1;
 	while ((b = b >> 1))
 		i++;
-	if (i < 8)
+	if (i < 8 || MB_CUR_MAX == 1)
 		return (1);
 	else if (i < 12)
 		return (2);
@@ -29,7 +29,7 @@ static int		ft_printf_unisize(unsigned int b)
 		return (4);
 }
 
-void			ft_printf_unic(unsigned int n, s_flag flags)
+void			ft_printf_unic(unsigned int n, t_flag flags)
 {
 	if (flags.width < 1)
 		ft_make_unicode(n);
@@ -49,18 +49,6 @@ void			ft_printf_unic(unsigned int n, s_flag flags)
 	}
 }
 
-void			ft_printf_unis(wchar_t *s)
-{
-	int			i;
-
-	i = 0;
-	while (s[i])
-	{
-		ft_make_unicode(s[i]);
-		i++;
-	}
-}
-
 static void		ft_printf_putunisn(wchar_t *s, int k)
 {
 	int			i;
@@ -76,7 +64,7 @@ static void		ft_printf_putunisn(wchar_t *s, int k)
 	}
 }
 
-static void		ft_printf_uniwidth(wchar_t *s, s_flag *flags)
+static void		ft_printf_uniwidth(wchar_t *s, t_flag *flags)
 {
 	int			i;
 	int			k;
@@ -100,7 +88,7 @@ static void		ft_printf_uniwidth(wchar_t *s, s_flag *flags)
 	}
 }
 
-void			ft_putstr_uniswidth(wchar_t *s, s_flag flags)
+void			ft_putstr_uniswidth(wchar_t *s, t_flag flags)
 {
 	if (s == NULL)
 		ft_putstr_width("(null)", flags);

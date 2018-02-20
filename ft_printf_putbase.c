@@ -6,18 +6,18 @@
 /*   By: rpetluk <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/15 14:46:02 by rpetluk           #+#    #+#             */
-/*   Updated: 2018/02/15 14:48:29 by rpetluk          ###   ########.fr       */
+/*   Updated: 2018/02/19 16:21:06 by rpetluk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static void	ft_printf_basenwidth(unsigned long long n, s_flag *flags)
+static void	ft_printf_basenwidth(unsigned long long n, t_flag *flags)
 {
 	if (flags->sign == 2)
 		flags->width--;
-    if (!n && flags->accuracy < 0)
-        flags->width--;
+	if (!n && flags->accuracy < 0)
+		flags->width--;
 	else if (flags->sign == 1 && flags->p == 2)
 		flags->width--;
 	if (flags->accuracy < 0)
@@ -50,39 +50,39 @@ static void	ft_printf_putbase(unsigned long long n)
 		ft_printf_putchar(n + 48);
 }
 
-void		ft_putnbr_base_width(unsigned long long n, s_flag flags)
+void		ft_putnbr_base_width(unsigned long long n, t_flag flags)
 {
-    if (flags.p == 1 && flags.accuracy > -1)
-        flags.p = 0;
+	if (flags.p == 1 && flags.accuracy > -1)
+		flags.p = 0;
 	if (flags.accuracy > -1 && !n)
 		flags.n = 0;
 	if (flags.width > 0 || flags.accuracy > -1)
 		ft_printf_basenwidth(n, &flags);
-    if (flags.hesh == 1 && flags.accuracy < 1 && n)
-        flags.width--;
+	if (flags.hesh == 1 && flags.accuracy < 1 && n)
+		flags.width--;
 	if (flags.p != 2)
 		ft_printf_widthnbr(&flags);
 	if ((flags.hesh == 1 && flags.accuracy < 0 && n) ||
 		(flags.hesh == 1 && flags.accuracy > -1))
-    {
-        ft_printf_putchar('0');
-        flags.accuracy--;
-    }
+	{
+		ft_printf_putchar('0');
+		flags.accuracy--;
+	}
 	while (flags.accuracy > 0)
-    {
-        ft_printf_putchar('0');
-        flags.accuracy--;
-    }
+	{
+		ft_printf_putchar('0');
+		flags.accuracy--;
+	}
 	if (flags.n)
 		ft_printf_putbase(n);
 	if (flags.p == 2)
 		ft_printf_widthnbr(&flags);
 }
 
-void		ft_putnbr_basex_width(unsigned long long n, s_flag flags)
+void		ft_putnbr_basex_width(unsigned long long n, t_flag flags)
 {
-    if (flags.p == 1 && flags.accuracy > -1)
-        flags.p = 0;
+	if (flags.p == 1 && flags.accuracy > -1)
+		flags.p = 0;
 	if (flags.accuracy > -1 && !n)
 		flags.n = 0;
 	if (flags.width > 0 || flags.accuracy > -1)

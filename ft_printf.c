@@ -12,7 +12,7 @@
 
 #include "ft_printf.h"
 
-static void		ft_printf_s_flag(s_flag *flags)
+static void		ft_printf_s_flag(t_flag *flags)
 {
 	flags->size = 0;
 	flags->width = 0;
@@ -23,7 +23,7 @@ static void		ft_printf_s_flag(s_flag *flags)
 	flags->n = 1;
 }
 
-static s_flag	ft_printf_flag(s_flag flags, char c)
+static t_flag	ft_printf_flag(t_flag flags, char c)
 {
 	if (c == ' ' && flags.sign == 0)
 		flags.sign = 1;
@@ -38,7 +38,7 @@ static s_flag	ft_printf_flag(s_flag flags, char c)
 	return (flags);
 }
 
-static s_flag	ft_printf_reint(s_flag flags, const char *format, va_list ap)
+static t_flag	ft_printf_reint(t_flag flags, const char *format, va_list ap)
 {
 	if ((format[flags.i] > 47 && format[flags.i] < 58) ||
 		format[flags.i] == '*')
@@ -49,7 +49,7 @@ static s_flag	ft_printf_reint(s_flag flags, const char *format, va_list ap)
 	return (flags);
 }
 
-static s_flag	ft_printf_w(s_flag flags, const char *s, va_list ap)
+static t_flag	ft_printf_w(t_flag flags, const char *s, va_list ap)
 {
 	int			c;
 
@@ -80,7 +80,7 @@ static s_flag	ft_printf_w(s_flag flags, const char *s, va_list ap)
 int				ft_printf(const char *format, ...)
 {
 	va_list		ap;
-	s_flag		flags;
+	t_flag		flags;
 
 	va_start(ap, format);
 	flags.i = 0;

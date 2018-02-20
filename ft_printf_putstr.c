@@ -12,7 +12,7 @@
 
 #include "ft_printf.h"
 
-void		ft_printf_width(s_flag *flags)
+void		ft_printf_width(t_flag *flags)
 {
 	char	sig;
 
@@ -24,7 +24,7 @@ void		ft_printf_width(s_flag *flags)
 		ft_printf_putchar(sig);
 }
 
-void		ft_putchar_width(char c, s_flag flags)
+void		ft_putchar_width(char c, t_flag flags)
 {
 	if (flags.width == 0)
 		ft_printf_putchar(c);
@@ -44,7 +44,7 @@ void		ft_putchar_width(char c, s_flag flags)
 	}
 }
 
-static void	ft_printf_strnwidth(char *s, s_flag *flags)
+static void	ft_printf_strnwidth(char *s, t_flag *flags)
 {
 	int		i;
 
@@ -65,7 +65,7 @@ static void	ft_printf_strnwidth(char *s, s_flag *flags)
 	}
 }
 
-void		ft_putstr_width(char *s, s_flag flags)
+void		ft_putstr_width(char *s, t_flag flags)
 {
 	if (s == NULL)
 		s = "(null)";
@@ -81,7 +81,7 @@ void		ft_putstr_width(char *s, s_flag flags)
 		ft_printf_width(&flags);
 }
 
-void		ft_printf_typechars(va_list ap, s_flag flags)
+void		ft_printf_typechars(va_list ap, t_flag flags)
 {
 	if (flags.size == 5)
 		ft_putstr_uniswidth(va_arg(ap, wchar_t *), flags);

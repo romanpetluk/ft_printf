@@ -6,7 +6,7 @@
 /*   By: rpetluk <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/15 14:49:52 by rpetluk           #+#    #+#             */
-/*   Updated: 2018/02/15 14:52:22 by rpetluk          ###   ########.fr       */
+/*   Updated: 2018/02/19 16:23:12 by rpetluk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,12 @@ static char	ft_0x(int x)
 	return (0);
 }
 
-void		ft_printf_basexnwidth(unsigned long long n, s_flag *flags)
+void		ft_printf_basexnwidth(unsigned long long n, t_flag *flags)
 {
-    if (flags->hesh == 1 && n)
+	if (flags->hesh == 1 && n)
 		flags->width -= 2;
-    if (!n && flags->accuracy < 0)
-        flags->width--;
+	if (!n && flags->accuracy < 0)
+		flags->width--;
 	if (flags->sign == 2)
 		flags->width--;
 	if (flags->sign == 1 && flags->p == 2)
@@ -96,10 +96,10 @@ static void	ft_printf_putbasexx(unsigned long long n)
 	}
 }
 
-void		ft_putnbr_basexx_width(unsigned long long n, s_flag flags)
+void		ft_putnbr_basexx_width(unsigned long long n, t_flag flags)
 {
-    if (flags.p == 1 && flags.accuracy > -1)
-        flags.p = 0;
+	if (flags.p == 1 && flags.accuracy > -1)
+		flags.p = 0;
 	if (flags.accuracy > -1 && !n)
 		flags.n = 0;
 	if (flags.width > 0 || flags.accuracy > -1)
